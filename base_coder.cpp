@@ -2,6 +2,7 @@
 
 base_coder::base_coder()
 {
+    input_file = "";
 }
 
 base_coder::base_coder(const QString& filename) :

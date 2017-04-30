@@ -2,6 +2,8 @@
 
 base_encoder::base_encoder()
 {
+    output_file = "";
+    message = "";
 }
 
 

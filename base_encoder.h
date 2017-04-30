@@ -14,7 +14,7 @@ public:
     void set_message(const QString& msg);
     void set_output_file(const std::string& out_filename);
     void set_output_file(const QString& out_filename);
-    virtual int encode() = 0;
+    virtual const int encode() = 0;
 
 protected:
     QString output_file;
