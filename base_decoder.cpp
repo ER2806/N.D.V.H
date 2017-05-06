@@ -1,7 +1,7 @@
 #include "base_decoder.h"
 
 base_decoder::base_decoder()
-    : base_coder()
+    : input_file("")
 {
 }
 
@@ -11,12 +11,13 @@ base_decoder::~base_decoder()
 }
 
 
-base_decoder::base_decoder(const QString& in_filename)
-    : base_coder(in_filename)
+base_decoder::base_decoder(const std::string& in_filename)
+    : input_file(in_filename)
 {
 }
 
-base_decoder::base_decoder(const std::string& in_filename)
-    : base_coder(in_filename)
+
+void base_decoder::set_input_file(const std::string& in_filename)
 {
+    input_file = in_filename;
 }
