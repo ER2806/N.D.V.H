@@ -11,7 +11,7 @@ public:
     void set_message(const std::string& msg);
     void set_output_file(const std::string& out_filename);
     void set_input_file(const std::string& in_filename);
-    virtual const int encode() = 0;
+    virtual const bool encode() = 0;
 
 protected:
     std::string input_file;
