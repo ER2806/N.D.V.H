@@ -10,13 +10,13 @@ format_parser::~format_parser()
 }
 
 
-format_parser::format_parser(const char* file)
+format_parser::format_parser(const std::string& file)
     : filename(file)
 {
 }
 
 
-void format_parser::set_filename(const char* file)
+void format_parser::set_filename(const std::string& file)
 {
     filename = file;
 }

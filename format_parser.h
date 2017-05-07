@@ -9,8 +9,8 @@ class format_parser
 {
 public:
     format_parser();
-    format_parser(const char* filename);
-    void set_filename(const char* filename);
+    format_parser(const std::string& filename);
+    void set_filename(const std::string& filename);
     const enum formats parse();
     ~format_parser();
 private:
