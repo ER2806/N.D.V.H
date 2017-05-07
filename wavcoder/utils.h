@@ -5,14 +5,12 @@
 
 #include "wav_src/wav_decoder.h"
 #include "mp3_src/mp3_decoder.h"
-//#include "bmp_src/bmp_decoder.h"
-//#include "jpg_src/jpg_decoder.h"
-//#include "png_src/png_decoder.h"
+#include "image_src/bmp_decoder.h"
+#include "image_src/jpg_decoder.h"
 #include "wav_src/wav_encoder.h"
 #include "mp3_src/mp3_encoder.h"
-//#include "bmp_src/bmp_encoder.h"
-//#include "jpg_src/jpg_encoder.h"
-//#include "png_src/png_encoder.h"
+#include "image_src/bmp_encoder.h"
+#include "image_src/jpg_encoder.h"
 
 #include <fstream>
 #include <iostream>

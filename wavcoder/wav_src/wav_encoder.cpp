@@ -27,6 +27,7 @@ void wav_encoder::encode()
 {
     std::fstream in_stream(input_file, std::ios::in | std::ios::binary);
     std::fstream out_stream(output_file, std::ios::out | std::ios::binary);
+    std::cout << "Opened" << std::endl;
     if (!in_stream.is_open()){
         throw common_exception("Troubles with opening source wav file.");
     }
@@ -66,6 +67,7 @@ void wav_encoder::encode()
             buff16[2] = buffer.to_ulong();
         }
         try {
+            //std::cout << "Write" << std::endl;
             out_stream.write(buff16, BUFSIZE);
         }
         catch (std::istream::failure&) {
@@ -73,4 +75,5 @@ void wav_encoder::encode()
         }
         block_count++;
     }
+    std::cout << "File name = " << output_file << std::endl;
 }

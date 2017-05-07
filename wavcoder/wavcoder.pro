@@ -1,5 +1,5 @@
 QT += core
-QT -= gui
+QT += gui
 
 CONFIG += c++11
 
@@ -19,7 +19,11 @@ SOURCES += main.cpp \
     mp3_src/raw_head.cpp \
     wav_src/wav_decoder.cpp \
     wav_src/wav_encoder.cpp \
-    mp3_src/head.cpp
+    mp3_src/head.cpp \
+    image_src/bmp_decoder.cpp \
+    image_src/jpg_decoder.cpp \
+    image_src/bmp_encoder.cpp \
+    image_src/jpg_encoder.cpp
 
 
 
@@ -38,4 +42,8 @@ HEADERS += \
     mp3_src/mp3_encoder.h \
     mp3_src/raw_head.h \
     wav_src/wav_decoder.h \
-    wav_src/wav_encoder.h
+    wav_src/wav_encoder.h \
+    image_src/bmp_decoder.h \
+    image_src/jpg_decoder.h \
+    image_src/bmp_encoder.h \
+    image_src/jpg_encoder.h

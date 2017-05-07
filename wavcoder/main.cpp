@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     else if (argc == 4) {
         // 1 аргумент - .формат, 2 аргумент - сообщение в txt, 3 аргумент - .формат вывода.
         std::string input_file = argv[1]; // clear format file
-        std::string msg_txt_file = argv[2];
-        std::string output_file = argv[3]; // format file with encoding message
+        std::string output_file = argv[2];
+        std::string msg_txt_file = argv[3]; // format file with encoding message
         bool rslt = encode(input_file, output_file, msg_txt_file);
     }
     else {

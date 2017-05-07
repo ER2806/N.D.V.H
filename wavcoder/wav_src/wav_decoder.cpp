@@ -66,5 +66,6 @@ const std::string wav_decoder::decode()
         }
         block_count++;
     }
+    std::cout << "result_string = " << result_string << std::endl;
     return result_string;
 }

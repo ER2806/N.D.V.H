@@ -54,6 +54,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
 
     std::ifstream message_file(msg_txt_file);
     std::string message = get_message(message_file);
+    std::cout << "message = " << message << std::endl;
 
     switch (fmt) {
     case wav:
@@ -137,6 +138,7 @@ const bool decode(const std::string& input_file, const std::string& output_file)
         try{
             wav_decoder coder(input_file);
             message = coder.decode();
+            std::cout << "DECODE 1 - " << input_file << " message = " << message << std::endl;
         }
         catch (common_exception& err){
             std::cerr << err.what() << std::endl;
