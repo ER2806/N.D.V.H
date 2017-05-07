@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "base_exception.h"
 
 
 const bool msg_to_file(const std::string& message, const std::string& file_name) {
@@ -19,6 +20,94 @@ const bool msg_to_file(const std::string& message, const std::string& file_name)
     return true;
 }
 
+const std::string get_message(std::ifstream &txt_file) {
+
+    std::string message((std::istreambuf_iterator<char>(txt_file)),
+        std::istreambuf_iterator<char>());
+
+    for (unsigned i = 0; i < message.size(); ++i) {
+        if (!isascii(message[i])) {
+            throw common_exception("wrong message.");
+        }
+    }
+
+    return message;
+}
+
+const bool encode(std::string input_file, std::string output_file, std::string msg_txt_file) {
+    format_parser find_format(input_file);
+    enum formats fmt = pass;
+    try {
+        fmt = find_format.parse();
+    }
+    catch (std::logic_error& err) {
+        std::cerr << err.what() << std::endl;
+        return false;
+    }
+
+    if (input_file == output_file) {
+        std::cerr << "Input and output filenames must be different." << std::endl;
+        return false;
+    }
+
+    std::ifstream message_file(msg_txt_file);
+    std::string message = get_message(message_file);
+
+    switch (fmt) {
+    case wav:
+        try{
+            wav_encoder coder(input_file, output_file, message);
+            coder.encode();
+        }
+        catch (common_exception& err){
+            std::cerr << err.what() << std::endl;
+            return false;
+        }
+        break;
+    case mp3:
+        try{
+            mp3_encoder coder(input_file, output_file, message);
+            coder.encode();
+        }
+        catch (err){
+            std::cerr << err.what() << std::endl;
+            return false;
+        }
+        break;
+    case bmp:
+        try{
+            bmp_encoder coder(input_file output_file, message);
+            coder.encode();
+        }
+        catch (err){
+            std::cerr << err.what() << std::endl;
+            return false;
+        }
+    case png:
+        try{
+            png_encoder coder(input_file output_file, message);
+            coder.encode();
+        }
+        catch (err){
+            std::cerr << err.what() << std::endl;
+            return false;
+        }
+        break;
+    case jpg:
+        try{
+            jpg_encoder coder(input_file output_file, message);
+            coder.encode();
+        }
+        catch (err){
+            std::cerr << err.what() << std::endl;
+            return false;
+        }
+        break;
+    default:
+        return false;
+    }
+
+}
 
 const bool decode(const std::string& input_file, const std::string& output_file)
 {
