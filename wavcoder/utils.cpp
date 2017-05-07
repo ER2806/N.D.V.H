@@ -64,7 +64,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
     switch (fmt) {
     case wav:
         try{
-            wav_encoder coder(input_file, output_file, message);
+            wav_encoder coder(input_file, output_file, msg_txt_file);
             coder.encode();
         }
         catch (common_exception& err){
@@ -74,7 +74,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
         break;
     case mp3:
         try{
-            mp3_encoder coder(input_file, output_file, message);
+            mp3_encoder coder(input_file, output_file, msg_txt_file);
             coder.encode();
         }
         catch (common_exception& err){
@@ -85,7 +85,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
 
     case bmp:
         try{
-            bmp_encoder coder(input_file, output_file, message);
+            bmp_encoder coder(input_file, output_file, msg_txt_file);
             coder.encode();
         }
         catch (common_exception& err){
@@ -94,7 +94,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
         }
     case png:
         try{
-            bmp_encoder coder(input_file, output_file, message);
+            bmp_encoder coder(input_file, output_file, msg_txt_file);
             coder.encode();
         }
         catch (common_exception& err){
@@ -104,7 +104,7 @@ const bool encode(std::string input_file, std::string output_file, std::string m
         break;
     case jpg:
         try{
-            jpg_encoder coder(input_file, output_file, message);
+            jpg_encoder coder(input_file, output_file, msg_txt_file);
             coder.encode();
         }
         catch (common_exception& err){
