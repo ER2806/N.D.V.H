@@ -24,15 +24,13 @@ const std::string get_message(std::ifstream &txt_file) {
 
     std::string message((std::istreambuf_iterator<char>(txt_file)),
         std::istreambuf_iterator<char>());
-/*
+
     for (unsigned i = 0; i < message.size(); ++i) {
-        if (!isascii(message[i]) && !isspace(message[i]) && !ispunct(message[i])) {
-            #include <iostream>
-            std::cout << "'" << message[i] << "' i = " <<  i << std::endl;
-            throw common_exception("wrong message.");
+        if (!isprint(message[i]) && !isspace(message[i]) && !ispunct(message[i])) {
+            throw common_exception("Wrong message.");
         }
     }
-*/
+
     return message;
 }
 
@@ -53,8 +51,15 @@ const bool encode(std::string input_file, std::string output_file, std::string m
     }
 
     std::ifstream message_file(msg_txt_file);
-    std::string message = get_message(message_file);
-    std::cout << "message = " << message << std::endl;
+    try {
+        std::string message = get_message(message_file);
+    }
+    catch (common_exception& err){
+        std::cerr << err.what() << std::endl;
+        return false;
+    }
+
+//    std::cout << "message = " << message << std::endl;
 
     switch (fmt) {
     case wav:
