@@ -2,6 +2,7 @@
 #include "string.h"
 #include "fstream"
 #include "bitset"
+#include "iostream"
 
 #define BUFSIZE 16
 
@@ -10,12 +11,8 @@ wav_encoder::wav_encoder()
 {
 }
 
-wav_encoder::~wav_encoder()
-{
-}
 
-wav_encoder::wav_encoder(const QString& in_filename, const QString& out_filename, const QString& msg)
-    : base_encoder(in_filename, out_filename, msg)
+wav_encoder::~wav_encoder()
 {
 }
 
@@ -25,46 +22,52 @@ wav_encoder::wav_encoder(const std::string& in_filename, const std::string& out_
 {
 }
 
-const int wav_encoder::encode()
+
+const bool wav_encoder::encode()
 {
-    FILE* infile = fopen(input_file.toStdString().c_str(), "rb");
-    FILE* outfile = fopen(output_file.toStdString().c_str(), "wb");
+    std::fstream in_stream(input_file, std::ios::in | std::ios::binary);
+    std::fstream out_stream(output_file, std::ios::out | std::ios::binary);
 
-    unsigned long count = 0;
-    std::bitset<8> msg;
-    std::bitset<16> buff;
-    short int buff16[BUFSIZE];
-    int nb;
-
-    std::string str_to_code = message.toStdString();
-    while (!feof(infile))
+    unsigned long block_count = 0;
+    std::string coding_str = message;
+    while (!in_stream.eof())
     {
-        nb = fread(buff16,1,BUFSIZE,infile);
-        // Insert processing code here
-        if (count == 3)
+        char buff16[BUFSIZE];
+        try {
+            in_stream.read(buff16, BUFSIZE);
+        }
+        catch (std::istream::failure&) {
+            std::cerr << "Reading troubles" << std::endl;
+            throw;
+        }
+        if (block_count == 3)
         {
-            msg = str_to_code.length();
-
-            buff = buff16[1];
+            std::bitset<8> msg = coding_str.length();
+            std::bitset<8> buffer = buff16[1];
             for (int i = 0; i < 8; i++)
             {
-                buff[i] = msg[i];
+                buffer[i] = msg[i];
             }
-            buff16[1] = buff.to_ulong();
+            buff16[2] = buffer.to_ulong();
         }
-        if (count< str_to_code.length()+5 && count > 4)
+        if (block_count < coding_str.length() + 5 && block_count > 4)
         {
-            msg = str_to_code[count-5];
-            buff = buff16[1];
+            std::bitset<8> msg = coding_str[block_count - 5];
+            std::bitset<8> buffer = buff16[1];
             for (int i = 0; i < 8; i++)
             {
-                buff[i] = msg[i];
+                buffer[i] = msg[i];
             }
-            buff16[1] = buff.to_ulong();
-            //char c = msg.to_ullong();
+            buff16[2] = buffer.to_ulong();
         }
-        fwrite(buff16,1,nb,outfile);			// Writing read data into output file
-        count++;
+        try {
+            out_stream.write(buff16, BUFSIZE);
+        }
+        catch (std::istream::failure&) {
+            std::cerr << "Writing troubles" << std::endl;
+            throw;
+        }
+        block_count++;
     }
     return 0;
 }

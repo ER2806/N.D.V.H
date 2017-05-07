@@ -2,24 +2,22 @@
 #include "string.h"
 #include "fstream"
 #include "bitset"
-#include <QFile>
-#include <QBitArray>
 #include <iostream>
+#include <fstream>
+
 
 #define BUFSIZE 16
+
 
 wav_decoder::wav_decoder()
 {
 }
 
+
 wav_decoder::~wav_decoder()
 {
 }
 
-wav_decoder::wav_decoder(const QString& in_filename)
-    : base_decoder(in_filename)
-{
-}
 
 wav_decoder::wav_decoder(const std::string& in_filename)
     : base_decoder(in_filename)
@@ -27,41 +25,45 @@ wav_decoder::wav_decoder(const std::string& in_filename)
 }
 
 
-const QString wav_decoder::decode()
+const std::string wav_decoder::decode()
 {
-    unsigned int count = 0;
-    std::string message;
-    unsigned long len;
+    std::string result_string;
+    std::fstream in_stream(input_file, std::ios::in | std::ios::binary);
 
-    FILE* in_stream = fopen(input_file.toStdString().c_str(), "rb");
-    while(!feof(in_stream))
+    int block_count = 0;
+    long message_length;
+
+    while (!in_stream.eof())
     {
-        short int buff16[BUFSIZE];
-        fread(buff16, 1, BUFSIZE, in_stream);
-
-        std::bitset<8> buff;
-        std::bitset<8> msg;
-        if (count == 3)
+        char buff16[BUFSIZE];
+        try{
+            in_stream.read(buff16, BUFSIZE);
+        }
+        catch (std::istream::failure&){
+            std::cerr << "Reading troubles" << std::endl;
+            throw;
+        }
+        if (block_count == 3)
         {
-            buff = buff16[1];
+            std::bitset<8> msg;
+            std::bitset<8> buffer = buff16[2];
             for (int i = 0; i < 8; i++)
             {
-                msg[i] = buff16[i];
+                msg[i] = buffer[i];
             }
-            len = msg.to_ulong();
-            std::cout << "len = " << len << std::endl;
+            message_length = msg.to_ulong();
         }
-        if ((count < len + 5) && (count > 4))
+        if (block_count < message_length + 5 && block_count > 4)
         {
-            buff = buff16[1];
+            std::bitset<8> msg;
+            std::bitset<8> buffer = buff16[2];
             for (int i = 0; i < 8; i++)
             {
-                msg[i] = buff[i];
+                msg[i] = buffer[i];
             }
-            char letter = msg.to_ullong();
-            message += letter;
+            result_string += msg.to_ulong();
         }
-        count++;
+        block_count++;
     }
-    return QString::fromStdString(message);
+    return result_string;
 }
