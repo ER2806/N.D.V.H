@@ -1,13 +1,13 @@
 #include "bmp_decoder.h"
 
-DecoderBMP::DecoderBMP(): base_decoder(){
+bmp_decoder::bmp_decoder(): base_decoder(){
 }
 
-DecoderBMP::DecoderBMP(const std::string& path): base_decoder(path){
+bmp_decoder::bmp_decoder(const std::string& path): base_decoder(path){
 }
 
 
-void DecoderBMP::get_bitset_blue_colors()
+void bmp_decoder::get_bitset_blue_colors()
 {
     QColor tmp;
     for (size_t i = 0; i < image_width; i++){
@@ -19,7 +19,7 @@ void DecoderBMP::get_bitset_blue_colors()
 }
 
 
-const std::string DecoderBMP::decode(){
+const std::string bmp_decoder::decode(){
     if (input_file.empty()){
         throw common_exception("The file is not indicate");
     }
@@ -38,14 +38,14 @@ const std::string DecoderBMP::decode(){
     return message;
 }
 
-size_t DecoderBMP::get_header_bits_amount()
+size_t bmp_decoder::get_header_bits_amount()
 {
     size_t amount = key_len + 4 + 1 + 8;
     return amount * 8;
 }
 
 
-void DecoderBMP::get_header(){
+void bmp_decoder::get_header(){
     size_t bits_amout = get_header_bits_amount() * 2;
     if (image_width * image_height < bits_amout){
         throw common_exception("This image does not contain the additional information");
@@ -78,7 +78,7 @@ void DecoderBMP::get_header(){
     }
 }
 
-void DecoderBMP::get_char_from_image(std::bitset<8>& tmp_uchar, size_t& position, size_t step){
+void bmp_decoder::get_char_from_image(std::bitset<8>& tmp_uchar, size_t& position, size_t step){
     for (int i = 0; i < 4; i++){
         tmp_uchar[2*i] = bitset_blue_colors[i * step  + position][0];
         tmp_uchar[2*i + 1] = bitset_blue_colors[i * step + position][1];
@@ -87,7 +87,7 @@ void DecoderBMP::get_char_from_image(std::bitset<8>& tmp_uchar, size_t& position
 }
 
 
-void DecoderBMP::get_len_message(std::bitset<32> &len_bits, size_t &position)
+void bmp_decoder::get_len_message(std::bitset<32> &len_bits, size_t &position)
 {
     for (int i = 0; i < 16; i++){
         len_bits[2*i] = bitset_blue_colors[i * 4  + position][0];
@@ -98,7 +98,7 @@ void DecoderBMP::get_len_message(std::bitset<32> &len_bits, size_t &position)
 }
 
 
-bool DecoderBMP::is_valid_image(){
+bool bmp_decoder::is_valid_image(){
     if (header.empty())
         get_header();
     // количество байтов в которых хранится хедер + отступы с двух сторон
@@ -113,7 +113,7 @@ bool DecoderBMP::is_valid_image(){
 }
 
 
-void DecoderBMP::get_message_from_image()
+void bmp_decoder::get_message_from_image()
 {
     std::bitset<8> tmp_uchar;
     size_t bit_position = (get_header_bits_amount() * 2) + 4;

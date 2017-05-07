@@ -12,15 +12,15 @@ void _jpegErrorExit ( j_common_ptr cinfo )
 }
 
 
-EncoderJPG::EncoderJPG(): base_encoder(){
+jpg_encoder::jpg_encoder(): base_encoder(){
 
 }
 
-EncoderJPG::EncoderJPG(std::string& in_filename, std::string& out_filename, std::string& msg)
+jpg_encoder::jpg_encoder(std::string& in_filename, std::string& out_filename, std::string& msg)
             : base_encoder(in_filename, out_filename, msg){
 }
 
-EncoderJPG::~EncoderJPG(){
+jpg_encoder::~jpg_encoder(){
     close_input_image();
     if (infile)
         fclose(infile);
@@ -29,7 +29,7 @@ EncoderJPG::~EncoderJPG(){
         fclose(outfile);
 }
 
-void EncoderJPG::encode(){
+void jpg_encoder::encode(){
     if (message.empty()){
         throw common_exception("The message is empty");
     }
@@ -50,12 +50,12 @@ void EncoderJPG::encode(){
 }
 
 
-void EncoderJPG::read_jpeg_file()
+void jpg_encoder::read_jpeg_file()
 {
     jpegErrorManager jerr;
     cinfo.err = jpeg_std_error(&jerr.pub);
 
-    //void (EncoderJPG::*func)(j_common_ptr) = &EncoderJPG::jpegErrorExit;
+    //void (jpg_encoder::*func)(j_common_ptr) = &jpg_encoder::jpegErrorExit;
     jerr.pub.error_exit = _jpegErrorExit;
     //cinfo.err = jpeg_std_error(&jerr);
     try{
@@ -82,7 +82,7 @@ void EncoderJPG::read_jpeg_file()
 }
 
 
-void EncoderJPG::close_input_image(){
+void jpg_encoder::close_input_image(){
     if (is_decompressed){
         //jpeg_finish_decompress( &(this->cinfo) );
         jpeg_destroy_decompress( &(this->cinfo) );
@@ -91,7 +91,7 @@ void EncoderJPG::close_input_image(){
     }
 }
 
-void EncoderJPG::create_jpeg_file()
+void jpg_encoder::create_jpeg_file()
 {
     struct jpeg_compress_struct cinfo_out;
     //struct jpeg_error_mgr jerr_out;
@@ -128,7 +128,7 @@ void EncoderJPG::create_jpeg_file()
 
 
 
-void EncoderJPG::get_bitset_y_components()
+void jpg_encoder::get_bitset_y_components()
 {
     size_t necessary_bits = get_header_bits_amount() + get_message_bits_amount();
     size_t extracted_bits = 0;
@@ -145,14 +145,14 @@ void EncoderJPG::get_bitset_y_components()
 }
 
 
-char EncoderJPG::bitset_to_char(std::bitset<8>& a){
+char jpg_encoder::bitset_to_char(std::bitset<8>& a){
     int res = a.to_ulong();
     res -= 127;
     return static_cast<char>(res);
 }
 
 
-void EncoderJPG::merge_bitset_y_comp_with_image()
+void jpg_encoder::merge_bitset_y_comp_with_image()
 {
     size_t necessary_bits = bitset_y_components.size();
     size_t added_bits = 0;
@@ -170,7 +170,7 @@ void EncoderJPG::merge_bitset_y_comp_with_image()
 }
 
 
-size_t EncoderJPG::get_header_bits_amount()
+size_t jpg_encoder::get_header_bits_amount()
 {
     //Формат Хранения хедера  //KEY##LEN@@
     // 32 - зарезервированное количество битов под размер
@@ -182,17 +182,17 @@ size_t EncoderJPG::get_header_bits_amount()
 }
 
 
-size_t EncoderJPG::get_message_bits_amount(){
+size_t jpg_encoder::get_message_bits_amount(){
     return message.size() * 8;
 }
 
 
-bool EncoderJPG::check_capacity(){
+bool jpg_encoder::check_capacity(){
     return (get_header_bits_amount() + get_message_bits_amount()) < (DCT_coefs_height * DCT_coefs_width);
 }
 
 
-void EncoderJPG::add_header_to_bitset(){
+void jpg_encoder::add_header_to_bitset(){
     //Формат Хранения хедера  //KEY##LEN@@
 
     std::bitset<8> bits_char = '/';
@@ -225,7 +225,7 @@ void EncoderJPG::add_header_to_bitset(){
 
 }
 
-void EncoderJPG::add_message_to_bitset()
+void jpg_encoder::add_message_to_bitset()
 {
     if (message.empty())
         throw common_exception("Message is empty");
@@ -240,7 +240,7 @@ void EncoderJPG::add_message_to_bitset()
 }
 
 
-void EncoderJPG::add_char_bits_to_bitset(std::bitset<8>& elem, size_t& tmp_index)
+void jpg_encoder::add_char_bits_to_bitset(std::bitset<8>& elem, size_t& tmp_index)
 {
     for (int i = 0; i < 8; i++){
         bitset_y_components[i + tmp_index][0] = elem[i];
@@ -250,7 +250,7 @@ void EncoderJPG::add_char_bits_to_bitset(std::bitset<8>& elem, size_t& tmp_index
 }
 
 
-void EncoderJPG::add_int_bits_to_bitset(std::bitset<32> &elem, size_t &tmp_index)
+void jpg_encoder::add_int_bits_to_bitset(std::bitset<32> &elem, size_t &tmp_index)
 {
     for (int i = 0; i < 32; i++){
         bitset_y_components[i + tmp_index][0] = elem[i];

@@ -1,6 +1,6 @@
 #ifndef DECODER_BMP_H
 #define DECODER_BMP_H
-#include <QImage>
+#include <QTGui>
 #include <vector>
 #include <bitset>
 #include <string>
@@ -8,13 +8,13 @@
 #include "base_decoder.h"
 #include "base_exception.h"
 
-class DecoderBMP: public base_decoder
+class bmp_decoder: public base_decoder
 {
 public:
-    DecoderBMP();
-    DecoderBMP(const std::string& path);
+    bmp_decoder();
+    bmp_decoder(const std::string& path);
     void set_input_file(const std::string& in_filename);
-    ~DecoderBMP() = default;
+    ~bmp_decoder() = default;
 
     virtual const std::string decode() override;
 

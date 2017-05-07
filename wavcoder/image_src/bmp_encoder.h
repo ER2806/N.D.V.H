@@ -1,7 +1,6 @@
 #ifndef ENCODER_BMP_H
 #define ENCODER_BMP_H
-//#include <QTGui>
-#include <QImage>
+#include <QTGui>
 #include <vector>
 #include <bitset>
 #include <string>
@@ -10,13 +9,13 @@
 #include "base_exception.h"
 
 
-class EncoderBMP: public base_encoder
+class bmp_encoder: public base_encoder
 {
 public:
-    EncoderBMP();
-    //EncoderBMP(std::string& in_filename, std::string& out_filename);
-    EncoderBMP(std::string& in_filename, std::string& out_filename, std::string& msg);
-    ~EncoderBMP() = default;
+    bmp_encoder();
+    //bmp_encoder(std::string& in_filename, std::string& out_filename);
+    bmp_encoder(std::string& in_filename, std::string& out_filename, std::string& msg);
+    ~bmp_encoder() = default;
 
     void set_message(std::string& message);
     void set_message(char* message);

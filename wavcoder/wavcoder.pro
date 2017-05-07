@@ -8,6 +8,8 @@ CONFIG += console
 CONFIG -= app_bundle
 
 TEMPLATE = app
+INCLUDEPATH += /usr/local/include
+LIBS += /usr/local/lib/libjpeg.a
 
 SOURCES += main.cpp \
     base_encoder.cpp \

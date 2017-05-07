@@ -1,16 +1,16 @@
 #include "bmp_encoder.h"
 
-EncoderBMP::EncoderBMP()
+bmp_encoder::bmp_encoder()
         : base_encoder(){
 }
 
-EncoderBMP::EncoderBMP(std::string &in_filename, std::string &out_filename, std::string &msg)
+bmp_encoder::bmp_encoder(std::string &in_filename, std::string &out_filename, std::string &msg)
                 : base_encoder(in_filename, out_filename, msg){
 
 }
 
 
-void EncoderBMP::encode(){
+void bmp_encoder::encode(){
     if (input_file.empty()){
         throw common_exception("Input file is not indicate");
     }
@@ -39,7 +39,7 @@ void EncoderBMP::encode(){
 }
 
 // Превращает строку в массив битов
-std::vector<std::bitset<8>> EncoderBMP::get_vec_bits_from_str(std::string& str){
+std::vector<std::bitset<8>> bmp_encoder::get_vec_bits_from_str(std::string& str){
 
     std::vector<std::bitset<8>> bitset_vec;
     std::bitset<8> tmp;
@@ -54,7 +54,7 @@ std::vector<std::bitset<8>> EncoderBMP::get_vec_bits_from_str(std::string& str){
 
 
 // Возвращает массив битов в которые запищем текст
-void EncoderBMP::get_bitset_blue_colors()
+void bmp_encoder::get_bitset_blue_colors()
 {
     std::bitset<8> tmp;
     //Будем хранить по 2 бита
@@ -80,7 +80,7 @@ void EncoderBMP::get_bitset_blue_colors()
 
 
 // Возвращает массив цветов изображения
-void EncoderBMP::get_vec_colors()
+void bmp_encoder::get_vec_colors()
 {
     for (size_t i = 0; i < image_width; i++){
         for (size_t j = 0; j < image_height; j++){
@@ -91,7 +91,7 @@ void EncoderBMP::get_vec_colors()
 
 
 // Возвращает колчество битов которое будет неоюходимо для хранения хедера
-size_t EncoderBMP::get_header_bits_amount()
+size_t bmp_encoder::get_header_bits_amount()
 {
     //Формат Хранения хедера  //KEY##LEN@@STEP@@
     // 32 - зарезервированное количество битов под размер
@@ -104,7 +104,7 @@ size_t EncoderBMP::get_header_bits_amount()
 
 
 // Возвращает шаг, с которым будем менять значение синего байта в изобраежении
-size_t EncoderBMP::get_step_of_recording()
+size_t bmp_encoder::get_step_of_recording()
 {
     size_t bits_amout = get_header_bits_amount() * 2;
     if (image_width * image_height < bits_amout){
@@ -124,7 +124,7 @@ size_t EncoderBMP::get_step_of_recording()
 
 
 // Добавляет хедер в массив синих байтов
-void EncoderBMP::add_header_to_bitset_blue_colors()
+void bmp_encoder::add_header_to_bitset_blue_colors()
 {
     //Формат Хранения хедера  //KEY##LEN@@STEP@@
 
@@ -170,7 +170,7 @@ void EncoderBMP::add_header_to_bitset_blue_colors()
 
 
 // Записывает сообщение в массив синих битов
-void EncoderBMP::add_message_to_bitset_blue_colors(){
+void bmp_encoder::add_message_to_bitset_blue_colors(){
     if (message.empty())
         throw common_exception("Message is empty");
     size_t bit_position = get_header_bits_amount() / 2;
@@ -185,7 +185,7 @@ void EncoderBMP::add_message_to_bitset_blue_colors(){
 
 
 // Добавляет char в массив синих байтов
-void EncoderBMP::add_char_bitset_to_bitset_blue_colors(std::bitset<8> bits, size_t& index)
+void bmp_encoder::add_char_bitset_to_bitset_blue_colors(std::bitset<8> bits, size_t& index)
 {
     for (int i = 0; i < 4; i++){
         //std::cout << i + index <<  " - >" << bitset_blue_colors[i + index] << " + "<< bits[2*i] << bits[2*i+1] << " = ";
@@ -198,7 +198,7 @@ void EncoderBMP::add_char_bitset_to_bitset_blue_colors(std::bitset<8> bits, size
 }
 
 
-void EncoderBMP::add_int_bitset_to_bitset_blue_colors(std::bitset<32> bits, size_t& index)
+void bmp_encoder::add_int_bitset_to_bitset_blue_colors(std::bitset<32> bits, size_t& index)
 {
     for (int i = 0; i < 16; i++){
         bitset_blue_colors[i + index][0] = bits[2*i];
@@ -209,7 +209,7 @@ void EncoderBMP::add_int_bitset_to_bitset_blue_colors(std::bitset<32> bits, size
 
 
 // Заменяем измененные биты в таблице цветов
-void EncoderBMP::replace_new_blue_bits()
+void bmp_encoder::replace_new_blue_bits()
 {
     size_t header_size = get_header_bits_amount() / 2;
     size_t message_size = message.size() * 4;
@@ -227,7 +227,7 @@ void EncoderBMP::replace_new_blue_bits()
 
 
 // Создаем новое изображение с измененными пикселями
-void EncoderBMP::generate_new_image(){
+void bmp_encoder::generate_new_image(){
     QImage new_im(image_width, image_height, QImage::Format_RGB32);
     size_t cur_pix = 0;
     for (size_t i = 0; i < image_width; i++){
@@ -251,7 +251,7 @@ void EncoderBMP::generate_new_image(){
 }
 
 
-bool EncoderBMP::is_png(){
+bool bmp_encoder::is_png(){
     if (input_file.size() < 5)
         return false;
     std::string new_str = input_file.substr(input_file.size() - 4);
@@ -259,7 +259,7 @@ bool EncoderBMP::is_png(){
 }
 
 
-bool EncoderBMP::is_bmp(){
+bool bmp_encoder::is_bmp(){
     if (input_file.size() < 5)
         return false;
     std::string new_str = input_file.substr(input_file.size() - 4);
@@ -267,7 +267,7 @@ bool EncoderBMP::is_bmp(){
 }
 
 
-QString EncoderBMP::toQString(std::string& str){
+QString bmp_encoder::toQString(std::string& str){
     QString res;
     for (size_t i = 0; i < str.size(); i++)
         res.push_back(str[i]);

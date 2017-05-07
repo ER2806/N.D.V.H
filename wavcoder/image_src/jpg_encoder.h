@@ -12,19 +12,18 @@
 
 
 
-class EncoderJPG: public base_encoder
+class jpg_encoder: public base_encoder
 {
 public:
-    EncoderJPG();
-    EncoderJPG(std::string& in_filename, std::string& out_filename, std::string& msg);
-    ~EncoderJPG();
+    jpg_encoder();
+    jpg_encoder(std::string& in_filename, std::string& out_filename, std::string& msg);
+    ~jpg_encoder();
 
     virtual void encode() override;
 private:
     std::string key = "Hello bro";
     size_t DCT_coefs_width;
     size_t DCT_coefs_height;
-    char jpegLastErrorMsg[JMSG_LENGTH_MAX];
     bool is_decompressed = false;
     size_t variable_elem_index = 10;                 //Индекс элемента в который запишем один бит
     std::vector<std::bitset<8>> bitset_y_components; // Синие биты цветов
@@ -59,7 +58,6 @@ private:
         /* for return to caller */
         jmp_buf setjmp_buffer;
     };
-    //void _jpegErrorExit (j_common_ptr cinfo);
 
 };
 

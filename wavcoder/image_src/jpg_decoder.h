@@ -9,14 +9,13 @@
 #include "base_decoder.h"
 #include "base_exception.h"
 #include <csetjmp>
-#include <bitset>
 
-class DecoderJPG: public base_decoder
+class jpg_decoder: public base_decoder
 {
 public:
-    DecoderJPG();
-    DecoderJPG(std::string& in_filename);
-    ~DecoderJPG() = default;
+    jpg_decoder();
+    jpg_decoder(const std::string& in_filename);
+    ~jpg_decoder() = default;
 
     virtual const std::string decode() override;
 

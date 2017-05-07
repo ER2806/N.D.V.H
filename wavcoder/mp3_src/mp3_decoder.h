@@ -5,7 +5,7 @@
 #include <bitset>
 #include <vector>
 #include <algorithm>
-
+#include <cmath>
 #include "head.h"
 #include "base_decoder.h"
 

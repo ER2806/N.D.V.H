@@ -77,37 +77,37 @@ const bool encode(std::string input_file, std::string output_file, std::string m
             return false;
         }
         break;
-    /*
+
     case bmp:
         try{
-            bmp_encoder coder(input_file output_file, message);
+            bmp_encoder coder(input_file, output_file, message);
             coder.encode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
     case png:
         try{
-            png_encoder coder(input_file output_file, message);
+            bmp_encoder coder(input_file, output_file, message);
             coder.encode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
         break;
     case jpg:
         try{
-            jpg_encoder coder(input_file output_file, message);
+            jpg_encoder coder(input_file, output_file, message);
             coder.encode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
         break;
-    */
+
     default:
         return false;
     }
@@ -145,12 +145,12 @@ const bool decode(const std::string& input_file, const std::string& output_file)
             return false;
         }
         break;
-    /*case mp3:
+    case mp3:
         try{
             mp3_decoder coder(input_file);
             message = coder.decode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
@@ -160,16 +160,16 @@ const bool decode(const std::string& input_file, const std::string& output_file)
             bmp_decoder coder(input_file);
             message = coder.decode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
     case png:
         try{
-            png_decoder coder(input_file);
+            bmp_decoder coder(input_file);
             message = coder.decode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
@@ -179,12 +179,12 @@ const bool decode(const std::string& input_file, const std::string& output_file)
             jpg_decoder coder(input_file);
             message = coder.decode();
         }
-        catch (err){
+        catch (common_exception& err){
             std::cerr << err.what() << std::endl;
             return false;
         }
         break;
-    */
+
     default:
         return false;
     }

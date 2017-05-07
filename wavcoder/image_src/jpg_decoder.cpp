@@ -11,16 +11,16 @@ void jpegErrorExit ( j_common_ptr cinfo )
     throw common_exception( jpegLastErrorMsg ); // or your preffered exception ...
 }
 
-DecoderJPG::DecoderJPG()
+jpg_decoder::jpg_decoder()
              :base_decoder(){
 }
 
-DecoderJPG::DecoderJPG(std::string& in_filename)
+jpg_decoder::jpg_decoder(const std::string& in_filename)
              :base_decoder(in_filename){
 }
 
 
-const std::string DecoderJPG::decode(){
+const std::string jpg_decoder::decode(){
     get_bitset_y_comp_from_file();
     get_header_from_bitset();
     if (!is_valid_image()){
@@ -30,7 +30,7 @@ const std::string DecoderJPG::decode(){
     return message;
 }
 
-void DecoderJPG::get_bitset_y_comp_from_file()
+void jpg_decoder::get_bitset_y_comp_from_file()
 {
     struct jpeg_decompress_struct cinfo;
     //struct jpeg_error_mgr jerr;
@@ -76,7 +76,7 @@ void DecoderJPG::get_bitset_y_comp_from_file()
 }
 
 
-size_t DecoderJPG::get_header_bits_amount()
+size_t jpg_decoder::get_header_bits_amount()
 {
     //Формат Хранения хедера  //KEY##LEN@@
     // 32 - зарезервированное количество битов под размер
@@ -88,13 +88,13 @@ size_t DecoderJPG::get_header_bits_amount()
 }
 
 
-size_t DecoderJPG::get_message_bits_amount(){
+size_t jpg_decoder::get_message_bits_amount(){
     return message.size() * 8;
 }
 
 
 
-bool DecoderJPG::is_valid_capacity_without_message()
+bool jpg_decoder::is_valid_capacity_without_message()
 {
     size_t bits_header_amount = get_header_bits_amount();
     size_t image_capacity = DCT_coefs_height * DCT_coefs_width;
@@ -102,7 +102,7 @@ bool DecoderJPG::is_valid_capacity_without_message()
 }
 
 
-bool DecoderJPG::is_valid_capacity_with_message(){
+bool jpg_decoder::is_valid_capacity_with_message(){
     size_t bits_header_amount = get_header_bits_amount();
     size_t bits_message_amount = get_message_bits_amount();
     size_t image_capacity = DCT_coefs_height * DCT_coefs_width;
@@ -110,19 +110,19 @@ bool DecoderJPG::is_valid_capacity_with_message(){
 }
 
 
-bool DecoderJPG::is_valid_image(){
+bool jpg_decoder::is_valid_image(){
     return (is_valid_capacity_with_message() && (header == "//Hello bro##@@"));
 }
 
 
-char DecoderJPG::bitset_to_char(std::bitset<8>& a){
+char jpg_decoder::bitset_to_char(std::bitset<8>& a){
     int res = a.to_ulong();
     res -= 127;
     return static_cast<char>(res);
 }
 
 
-void DecoderJPG::get_header_from_bitset(){
+void jpg_decoder::get_header_from_bitset(){
     if (!is_valid_capacity_without_message()){
         throw common_exception("This image does not contain the additional information");
     }
@@ -148,7 +148,7 @@ void DecoderJPG::get_header_from_bitset(){
 }
 
 
-void DecoderJPG::get_message_from_bitset(){
+void jpg_decoder::get_message_from_bitset(){
     if (!is_valid_image()){
         throw common_exception("This image does not contain any additional message");
     }
@@ -163,7 +163,7 @@ void DecoderJPG::get_message_from_bitset(){
 
 }
 
-void DecoderJPG::get_char_from_bitset(std::bitset<8>& tmp_uchar, size_t& position, size_t step)
+void jpg_decoder::get_char_from_bitset(std::bitset<8>& tmp_uchar, size_t& position, size_t step)
 {
     for (int i = 0; i < 8; i++){
         tmp_uchar[i] = bitset_y_components[i * step  + position][0];
@@ -172,7 +172,7 @@ void DecoderJPG::get_char_from_bitset(std::bitset<8>& tmp_uchar, size_t& positio
 }
 
 
-void DecoderJPG::get_len_message_from_bitset(std::bitset<32>& len_bits, size_t &position)
+void jpg_decoder::get_len_message_from_bitset(std::bitset<32>& len_bits, size_t &position)
 {
     for (int i = 0; i < 32; i++){
         len_bits[i] = bitset_y_components[i  + position][0];
