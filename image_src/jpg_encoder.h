@@ -1,6 +1,5 @@
 #ifndef ENCODER_JPG_H
 #define ENCODER_JPG_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <jpeglib.h>
@@ -17,7 +16,7 @@ class jpg_encoder: public base_encoder
 {
 public:
     jpg_encoder();
-    jpg_encoder(std::string& in_filename, std::string& out_filename, std::string& msg);
+    jpg_encoder(const std::string& in_filename, const std::string& out_filename, const std::string& msg);
     ~jpg_encoder();
 
     virtual void encode() override;
@@ -61,5 +60,5 @@ private:
     };
 
 };
-*/
+
 #endif // ENCODER_JPG_H

@@ -124,7 +124,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
                 std::cerr << err.what() << std::endl;
                 return false;
             }
-        /*
+
         case bmp:
             try {
                 bmp_encoder coder(input_file, output_file, msg_txt_file);
@@ -146,7 +146,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
                 return false;
             }
         case jpg:
-            try { constructor
+            try { /*constructor*/
                 jpg_encoder coder(input_file, output_file, msg_txt_file);
                 coder.encode();
                 break;
@@ -155,7 +155,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
                 std::cerr << err.what() << std::endl;
                 return false;
             }
-        */
+
         default:
             return false;
     }
@@ -200,7 +200,7 @@ const bool decode(const std::string& input_file, const std::string& output_file)
             return false;
         }
         break;
-/*
+
     case bmp:
         try{
             bmp_decoder coder(input_file);
@@ -230,7 +230,7 @@ const bool decode(const std::string& input_file, const std::string& output_file)
             return false;
         }
         break;
-*/
+
     default:
         return false;
     }

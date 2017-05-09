@@ -15,7 +15,7 @@ class bmp_encoder: public base_encoder
 public:
     bmp_encoder();
     //bmp_encoder(std::string& in_filename, std::string& out_filename);
-    bmp_encoder(std::string& in_filename, std::string& out_filename, std::string& msg);
+    bmp_encoder(const std::string& in_filename, const std::string& out_filename, const std::string& msg);
     ~bmp_encoder() = default;
 
     void set_message(std::string& message);

@@ -16,7 +16,7 @@ jpg_encoder::jpg_encoder(): base_encoder(){
 
 }
 
-jpg_encoder::jpg_encoder(std::string& in_filename, std::string& out_filename, std::string& msg)
+jpg_encoder::jpg_encoder(const std::string& in_filename, const std::string& out_filename, const std::string& msg)
             : base_encoder(in_filename, out_filename, msg){
 }
 

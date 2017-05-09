@@ -4,7 +4,7 @@ bmp_encoder::bmp_encoder()
         : base_encoder(){
 }
 
-bmp_encoder::bmp_encoder(std::string &in_filename, std::string &out_filename, std::string &msg)
+bmp_encoder::bmp_encoder(const std::string &in_filename, const std::string &out_filename, const std::string &msg)
                 : base_encoder(in_filename, out_filename, msg){
 
 }
