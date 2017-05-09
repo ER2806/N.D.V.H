@@ -1,3 +1,4 @@
+/*
 #include "jpg_encoder.h"
 #include <iostream>
 
@@ -5,9 +6,11 @@ void _jpegErrorExit ( j_common_ptr cinfo )
 {
     char jpegLastErrorMsg[JMSG_LENGTH_MAX];
     /* Create the message */
+/*
     ( *( cinfo->err->format_message ) ) ( cinfo, jpegLastErrorMsg );
 
     /* Jump to the setjmp point */
+/*
     throw common_exception( jpegLastErrorMsg ); // or your preffered exception ...
 }
 
@@ -258,3 +261,4 @@ void jpg_encoder::add_int_bits_to_bitset(std::bitset<32> &elem, size_t &tmp_inde
 
     tmp_index += 32;
 }
+*/

@@ -8,13 +8,12 @@ CONFIG += console
 CONFIG -= app_bundle
 
 TEMPLATE = app
-INCLUDEPATH += /usr/local/include
-LIBS += /usr/local/lib/libjpeg.a
+# INCLUDEPATH += /usr/local/include
+# LIBS += /usr/local/lib/libjpeg.a
 
 SOURCES += main.cpp \
     base_encoder.cpp \
     base_decoder.cpp \
-    format_parser.cpp \
     utils.cpp \
     mp3_src/mp3_decoder.cpp \
     mp3_src/mp3_encoder.cpp \
@@ -33,7 +32,6 @@ SOURCES += main.cpp \
 HEADERS += \
     base_encoder.h \
     base_decoder.h \
-    format_parser.h \
     formats.h \
     utils.h \
     base_exception.h \

@@ -1,5 +1,8 @@
 #ifndef DECODER_BMP_H
 #define DECODER_BMP_H
+/*
+
+
 #include <QTGui>
 #include <vector>
 #include <bitset>
@@ -39,5 +42,5 @@ private:
     bool is_valid_image();
     void get_message_from_image();
 };
-
+*/
 #endif // DECODER_BMP_H

@@ -1,5 +1,6 @@
 #ifndef DECODER_JPG_H
 #define DECODER_JPG_H
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -45,9 +46,12 @@ private:
 
     struct jpegErrorManager {
         /* "public" fields */
+/*
         struct jpeg_error_mgr pub;
         /* for return to caller */
+/*
         jmp_buf setjmp_buffer;
     };
 };
+*/
 #endif // DECODER_JPG_H

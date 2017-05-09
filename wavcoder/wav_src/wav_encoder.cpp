@@ -46,7 +46,7 @@ void wav_encoder::encode()
         catch (std::istream::failure&) {
             throw common_exception("Troubles with reading from source wav file.");
         }
-        if (block_count == 3)
+        if (block_count == 3) // passing header, encrypt started from first block
         {
             std::bitset<8> msg = coding_str.length();
             std::bitset<8> buffer = buff16[1];
@@ -56,7 +56,7 @@ void wav_encoder::encode()
             }
             buff16[2] = buffer.to_ulong();
         }
-        if (block_count < coding_str.length() + 5 && block_count > 4)
+        if (block_count < coding_str.length() + 5 && block_count > 4) //encrypt only one channel
         {
             std::bitset<8> msg = coding_str[block_count - 5];
             std::bitset<8> buffer = buff16[1];

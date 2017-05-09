@@ -1,5 +1,5 @@
 #include "bmp_decoder.h"
-
+/*
 bmp_decoder::bmp_decoder(): base_decoder(){
 }
 
@@ -122,3 +122,4 @@ void bmp_decoder::get_message_from_image()
         message.push_back(static_cast<char>(tmp_uchar.to_ulong()));
     }
 }
+*/

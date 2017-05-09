@@ -1,5 +1,5 @@
 #include "bmp_encoder.h"
-
+/*
 bmp_encoder::bmp_encoder()
         : base_encoder(){
 }
@@ -273,3 +273,4 @@ QString bmp_encoder::toQString(std::string& str){
         res.push_back(str[i]);
     return res;
 }
+*/

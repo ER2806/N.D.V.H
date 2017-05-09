@@ -5,10 +5,6 @@
 #include <iostream>
 #include <fstream>
 
-
-#define BUFSIZE 16
-
-
 wav_decoder::wav_decoder()
 {
 }
@@ -27,6 +23,7 @@ wav_decoder::wav_decoder(const std::string& in_filename)
 
 const std::string wav_decoder::decode()
 {
+    const int BUFSIZE = 16;
     std::string result_string;
     std::fstream in_stream(input_file, std::ios::in | std::ios::binary);
     if (!in_stream.is_open()){
@@ -44,10 +41,10 @@ const std::string wav_decoder::decode()
         catch (std::istream::failure&){
             throw common_exception("Troubles with reading from source wav file.");
         }
-        if (block_count == 3)
+        if (block_count == 3) // passing the header, encrypt from fitst block
         {
             std::bitset<8> msg;
-            std::bitset<8> buffer = buff16[2];
+            std::bitset<8> buffer = buff16[2]; // encrypt one channel
             for (int i = 0; i < 8; i++)
             {
                 msg[i] = buffer[i];

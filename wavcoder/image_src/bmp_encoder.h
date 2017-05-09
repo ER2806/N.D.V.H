@@ -1,5 +1,6 @@
 #ifndef ENCODER_BMP_H
 #define ENCODER_BMP_H
+/*
 #include <QTGui>
 #include <vector>
 #include <bitset>
@@ -46,5 +47,5 @@ private:
     bool is_bmp();
     QString toQString(std::string& str);
 };
-
+*/
 #endif // ENCODER_BMP_H

@@ -1,13 +1,15 @@
 #include "jpg_decoder.h"
 #include <csetjmp>
-
+/*
 void jpegErrorExit ( j_common_ptr cinfo )
 {
     char jpegLastErrorMsg[JMSG_LENGTH_MAX];
     /* Create the message */
+/*
     ( *( cinfo->err->format_message ) ) ( cinfo, jpegLastErrorMsg );
 
     /* Jump to the setjmp point */
+/*
     throw common_exception( jpegLastErrorMsg ); // or your preffered exception ...
 }
 
@@ -180,3 +182,4 @@ void jpg_decoder::get_len_message_from_bitset(std::bitset<32>& len_bits, size_t 
 
     position += 32;
 }
+*/

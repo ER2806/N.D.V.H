@@ -1,5 +1,7 @@
 #ifndef ENCODER_JPG_H
 #define ENCODER_JPG_H
+/*
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <jpeglib.h>
@@ -54,11 +56,13 @@ private:
     char bitset_to_char(std::bitset<8>& a);
     struct jpegErrorManager {
         /* "public" fields */
+/*
         struct jpeg_error_mgr pub;
         /* for return to caller */
+/*
         jmp_buf setjmp_buffer;
     };
 
 };
-
+*/
 #endif // ENCODER_JPG_H
