@@ -1,7 +1,7 @@
 #ifndef ENCODER_BMP_H
 #define ENCODER_BMP_H
 
-#include <QTGui>
+#include <QImage>
 #include <vector>
 #include <bitset>
 #include <string>

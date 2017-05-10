@@ -1,8 +1,7 @@
 #ifndef DECODER_BMP_H
 #define DECODER_BMP_H
 
-
-#include <QTGui>
+#include <QImage>
 #include <vector>
 #include <bitset>
 #include <string>

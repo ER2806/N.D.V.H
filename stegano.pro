@@ -9,7 +9,14 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 INCLUDEPATH += /usr/local/include
-LIBS += /usr/local/lib/libjpeg.a
+
+macx {
+    LIBS += /usr/local/lib/libjpeg.a
+}
+
+linux-g++ {
+    LIBS += /usr/lib/x86_64-linux-gnu/libjpeg.a
+}
 
 SOURCES += main.cpp \
     base_encoder.cpp \

@@ -10,6 +10,7 @@
 #include "base_decoder.h"
 #include "base_exception.h"
 #include <csetjmp>
+#include <bitset>
 
 class jpg_decoder: public base_decoder
 {
