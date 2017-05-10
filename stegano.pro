@@ -18,6 +18,10 @@ linux-g++ {
     LIBS += /usr/lib/x86_64-linux-gnu/libjpeg.a
 }
 
+win32 {
+# Add path to libjpeg yourself! :)
+}
+
 SOURCES += main.cpp \
     base_encoder.cpp \
     base_decoder.cpp \

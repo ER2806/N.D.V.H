@@ -93,8 +93,9 @@ const bool encode(const std::string& input_file, const std::string& output_file,
     }
 
     std::ifstream message_file(msg_txt_file);
+    std::string message;
     try {
-        std::string message = _get_message(message_file);
+        message = _get_message(message_file);
     }
     catch (common_exception& err){
         std::cerr << err.what() << std::endl;
@@ -106,7 +107,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
     switch (fmt) {
         case wav:
             try {
-                wav_encoder coder(input_file, output_file, msg_txt_file);
+                wav_encoder coder(input_file, output_file, message);
                 coder.encode();
                 break;
             }
@@ -116,7 +117,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
             }
         case mp3:
             try {
-                mp3_encoder coder(input_file, output_file, msg_txt_file);
+                mp3_encoder coder(input_file, output_file, message);
                 coder.encode();
                 break;
             }
@@ -127,7 +128,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
 
         case bmp:
             try {
-                bmp_encoder coder(input_file, output_file, msg_txt_file);
+                bmp_encoder coder(input_file, output_file, message);
                 coder.encode();
                 break;
             }
@@ -137,7 +138,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
             }
         case png:
             try {
-                bmp_encoder coder(input_file, output_file, msg_txt_file);
+                bmp_encoder coder(input_file, output_file, message);
                 coder.encode();
                 break;
             }
@@ -147,7 +148,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
             }
         case jpg:
             try { /*constructor*/
-                jpg_encoder coder(input_file, output_file, msg_txt_file);
+                jpg_encoder coder(input_file, output_file, message);
                 coder.encode();
                 break;
             }
@@ -159,7 +160,7 @@ const bool encode(const std::string& input_file, const std::string& output_file,
         default:
             return false;
     }
-    return false;
+    return true;
 }
 
 const bool decode(const std::string& input_file, const std::string& output_file) {

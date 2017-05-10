@@ -11,6 +11,7 @@ bmp_encoder::bmp_encoder(const std::string &in_filename, const std::string &out_
 
 
 void bmp_encoder::encode(){
+
     if (input_file.empty()){
         throw common_exception("Input file is not indicate");
     }
