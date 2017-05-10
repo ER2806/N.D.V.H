@@ -1,7 +1,7 @@
 #include "jpg_encoder.h"
 #include <iostream>
 
-void _jpegErrorExit ( j_common_ptr cinfo )
+void _jpeg_error_exit(j_common_ptr cinfo)
 {
     char jpegLastErrorMsg[JMSG_LENGTH_MAX];
     /* Create the message */
@@ -56,7 +56,7 @@ void jpg_encoder::read_jpeg_file()
     cinfo.err = jpeg_std_error(&jerr.pub);
 
     //void (jpg_encoder::*func)(j_common_ptr) = &jpg_encoder::jpegErrorExit;
-    jerr.pub.error_exit = _jpegErrorExit;
+    jerr.pub.error_exit = _jpeg_error_exit;
     //cinfo.err = jpeg_std_error(&jerr);
     try{
 
@@ -97,7 +97,7 @@ void jpg_encoder::create_jpeg_file()
     //struct jpeg_error_mgr jerr_out;
     jpegErrorManager jerr_out;
     cinfo_out.err = jpeg_std_error(&jerr_out.pub);
-    jerr_out.pub.error_exit = _jpegErrorExit;
+    jerr_out.pub.error_exit = _jpeg_error_exit;
     if ((this->outfile = fopen(this->output_file.c_str(), "wb")) == NULL) {
         // fprintf(stderr, "can't open %s\n", outname.c_str());
         //return 0;

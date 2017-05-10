@@ -1,7 +1,7 @@
 #include "jpg_decoder.h"
 #include <csetjmp>
 
-void jpegErrorExit ( j_common_ptr cinfo )
+void jpeg_error_exit(j_common_ptr cinfo)
 {
     char jpegLastErrorMsg[JMSG_LENGTH_MAX];
     /* Create the message */
@@ -43,7 +43,7 @@ void jpg_decoder::get_bitset_y_comp_from_file()
     cinfo.err = jpeg_std_error(&jerr.pub);
     try{
         //void (EncoderJPG::*func)(j_common_ptr) = &EncoderJPG::jpegErrorExit;
-        jerr.pub.error_exit = jpegErrorExit;
+        jerr.pub.error_exit = jpeg_error_exit;
         //cinfo.err = jpeg_std_error(&jerr);
         jpeg_create_decompress(&cinfo);
         jpeg_stdio_src(&cinfo, infile);
